@@ -1,4 +1,3 @@
-const totalNumCards = 52;
 const suits = ["♥", "♠", "♣", "♦"];
 const values = [
   "2",
@@ -83,12 +82,32 @@ let reka4 = deck.deal();
 // console.log(straigthCase(Strit));
 
 let Strit = [
-  { suit: "Heagtfrt", value: "2", val_map: 2 },
-  { suit: "teart", value: "4", val_map: 4 },
-  { suit: "Heatrt", value: "3", val_map: 3 },
-  { suit: "Heart", value: "5", val_map: 5 },
-  { suit: "Heart", value: "8", val_map: 8 }
+  { suit: "Heart", value: "2", val_map: 9 },
+  { suit: "Heart", value: "4", val_map: 10 },
+  { suit: "Heart", value: "3", val_map: 11 },
+  { suit: "Heart", value: "5", val_map: 12 },
+  { suit: "Heart", value: "6", val_map: 13 }
 ];
+
+// let names = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice']
+
+// let countedNames = names.reduce(function (allNames, name) {
+//   if (name in allNames) {
+//     allNames[name]++
+//   }
+//   else {
+//     allNames[name] = 1
+//   }
+//   return allNames
+
+function checkKingAss(h) {
+  let z = h.slice(3);
+  if (z[0].val_map == 12 && z[1].val_map == 13) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 //karoca
 function fourOfkind(renka) {
@@ -156,6 +175,13 @@ function colorCase(tab) {
 function pokier(hand) {
   return (colorCase(hand) === true && checkStrit(hand) === true) === true;
 }
+function royalFlush(hand) {
+  return (
+    (colorCase(hand) === true &&
+      checkStrit(hand) === true &&
+      checkKingAss(hand) === true) === true
+  );
+}
 
 // let countedNames = Strit.reduce((allNames, name) => {
 //   allNames[name.value] = ++allNames[name.value] || 1;
@@ -193,25 +219,17 @@ function checkHand(hand) {
   let a = pokier(hand);
   let b = checkStrit(hand);
   let c = colorCase(hand);
-  let d = fourOfkind(hand);
+  let ak = royalFlush(hand);
   let e = threeOfkind(hand);
   let f = full(hand);
   let g = twoPairs(hand);
   let h = adnaPairs(hand);
   let i = hand.slice(4).pop();
   let z = checkRest(hand).toString();
-  // let x =ff(hand) {
-  //   let u = this.checkRest(hand).toString();
-  //   if (u === "3,1,1") {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
-  // let j = hand.pop();
 
   switch (true) {
+    case ak:
+      return "Royal flush";
     case a:
       return "Straight flush";
 
@@ -243,20 +261,3 @@ function checkHand(hand) {
       return `High Card ${i.value + " " + i.suit}`;
   }
 }
-// function checkHand2(hand) {
-//   if (pokier(hand) == true) {
-//     return "Pokier";
-//   } else {
-//     if (checkStrit(hand) == true) {
-//       return "Strit";
-//     } else {
-//       if (colourCase(hand) == true) {
-//         return "kolor";
-//       } else {
-//         if (adnaPairs(hand) == true) {
-//           return "para";
-//         } else return "rower";
-//       }
-//     }
-//   }
-// }
